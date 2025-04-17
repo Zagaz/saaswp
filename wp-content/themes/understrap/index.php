@@ -12,6 +12,44 @@ $success_message = '';
 // Load the appropriate header based on login status
 is_user_logged_in() ? get_header('logged') : get_header('blank');
 
+if (is_user_logged_in() && is_front_page()){
+    
+    $page = $_GET['p'] ?? '';
+
+   
+
+    switch($page){
+        case 'dashboard':
+            // get template part on template-parts folder 
+            get_template_part('template-parts/tpl-dashboard');//
+            break;
+        case 'add-income':
+            get_template_part('template-parts/tpl-add-income');//
+            break;
+        case 'add-outcome':
+            get_template_part('template-parts/tpl-add-outcome');//
+            break;
+        case 'add-category-bills':
+            get_template_part('template-parts/tpl-add-category-bills'); //
+            break;
+        case 'report-income':
+            get_template_part('template-parts/tpl-report-income');//
+            break;
+        case 'report-outcome':
+            get_template_part('template-parts/tpl-report-outcome');//
+            break;
+        case 'report-full':
+            get_template_part('template-parts/tpl-report-full');//
+            break;
+        default:
+            get_template_part('template-parts/tpl-dashboard');//
+            break;
+
+    }
+
+
+}
+
 if (isset($_POST['submit'])) {
     // Sanitize user inputs
     $name = sanitize_text_field($_POST['name'] ?? '');
@@ -78,7 +116,10 @@ if (isset($_POST['submit'])) {
 
 <div class="container">
     <div class="row">
-        <div class="col-6">
+        <div class="col-6 form-registration">
+            <?php // LEFT - Registration ?>
+            <h2>Registration</h2>
+            <p>Fill in the form below to register.</p>
             <?php if (!empty($success_message)) : ?>
                 <div class="alert alert-success">
                     <?php echo esc_html($success_message); ?>
@@ -104,7 +145,10 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
 
-        <div class="col-6">
+        <div class="col-6 form-login">
+            <?php // RIGHT - Login ?>
+            <h2>Login</h2>
+            <p>Already have an account? Log in below.</p>
             <div class="login-form">
                 <?php 
                 $args = array(
