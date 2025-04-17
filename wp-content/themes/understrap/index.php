@@ -4,57 +4,73 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
+// Initialize variables
 $name_error = '';
 $email_error = '';
 $success_message = '';
 
-if (is_front_page()) {
-    is_user_logged_in() ? get_header('logged') : get_header('blank');
-} else {
-    is_user_logged_in() ? get_header('logged') : get_header('blank');
+// Load the appropriate header based on login status
+is_user_logged_in() ? get_header('logged') : get_header('blank');
 
-    if (isset($_POST['submit'])) {
-        $name  = sanitize_text_field($_POST['name'] ?? '');
-        $email = sanitize_email($_POST['email'] ?? '');
+if (isset($_POST['submit'])) {
+    // Sanitize user inputs
+    $name = sanitize_text_field($_POST['name'] ?? '');
+    $email = sanitize_email($_POST['email'] ?? '');
 
-        if (empty($name)) {
-            $name_error = 'Please enter your name.';
-        }
+    // Validate name
+    if (empty($name)) {
+        $name_error = 'Please enter your name.';
+    } elseif (!preg_match("/^[a-zA-Z ]*$/", $name)) {
+        $name_error = 'Name can only contain letters and spaces.';
+    }
 
-        if (!is_email($email)) {
-            $email_error = 'Please enter a valid email address.';
-        } elseif (email_exists($email)) {
-            $email_error = 'This email address is already registered.';
-        }
+    // Validate email
+    if (empty($email)) {
+        $email_error = 'Please enter your email address.';
+    } elseif (!is_email($email)) {
+        $email_error = 'Please enter a valid email address.';
+    } elseif (email_exists($email)) {
+        $email_error = 'This email address is already registered.';
+    }
 
-        if (empty($name_error) && empty($email_error)) {
-            $random_password = wp_generate_password(6, false, false);
+    // If no errors, create the user
+    if (empty($name_error) && empty($email_error)) {
+        $random_password = wp_generate_password(6, false, false);
 
-            $user_id = wp_create_user($email, $random_password, $email);
+        $user_id = wp_create_user($email, $random_password, $email);
 
-            if (!is_wp_error($user_id)) {
-                wp_update_user([
-                    'ID'           => $user_id,
-                    'display_name' => $name,
-                    'first_name'   => $name
-                ]);
+        if (!is_wp_error($user_id)) {
+            // Update user details
+            wp_update_user([
+                'ID'           => $user_id,
+                'display_name' => $name,
+                'first_name'   => $name,
+            ]);
 
-                $user = new WP_User($user_id);
-                $user->set_role('subscriber');
-                $subject = 'Registration Confirmation';
-                $blogname = get_bloginfo('name');
-                $message = "Hello $name,\n\n Your account has been created successfully.\n\nYou can log in using the following credentials:\n\nUsername: $email\nPassword: $random_password\n\nPlease keep this information safe.\n\nTo log in, please visit: <a href='" . wp_login_url() . "'> LOGIN </a>\n\nIf you did not create this account, please ignore this email.\n\nFor security reasons, we recommend that you change your password after logging in.\n\nThank you for registering with us!\n\nBest regards,\n $blogname";
-                
-                "\n\n Please change your password after logging in.\n\nBest regards,\n $blogname";
+            // Assign subscriber role
+            $user = new WP_User($user_id);
+            $user->set_role('subscriber');
 
-                if (wp_mail($email, $subject, $message)) {
-                    $success_message = 'User registered successfully.';
-                } else {
-                    $email_error = 'Error sending email. Please try again.';
-                }
+            // Prepare email
+            $subject = 'Registration Confirmation';
+            $blogname = get_bloginfo('name');
+            $message = "Hello $name,\n\nYour account has been created successfully.\n\n";
+            $message .= "You can log in using the following credentials:\n\n";
+            $message .= "Username: $email\nPassword: $random_password\n\n";
+            $message .= "Please keep this information safe.\n\n";
+            $message .= "To log in, please visit: " . wp_login_url() . "\n\n";
+            $message .= "If you did not create this account, please ignore this email.\n\n";
+            $message .= "For security reasons, we recommend that you change your password after logging in.\n\n";
+            $message .= "Thank you for registering with us!\n\nBest regards,\n$blogname";
+
+            // Send email
+            if (wp_mail($email, $subject, $message)) {
+                $success_message = 'User registered successfully.';
             } else {
-                $email_error = 'Error creating user: ' . $user_id->get_error_message();
+                $email_error = 'Error sending email. Please try again.';
             }
+        } else {
+            $email_error = 'Error creating user: ' . $user_id->get_error_message();
         }
     }
 }
@@ -65,25 +81,25 @@ if (is_front_page()) {
         <div class="col-6">
             <?php if (!empty($success_message)) : ?>
                 <div class="alert alert-success">
-                    <?php echo $success_message; ?>
+                    <?php echo esc_html($success_message); ?>
                 </div>
             <?php endif; ?>
 
             <div class="registration-form <?php echo !empty($success_message) ? 'd-none' : ''; ?>">
                 <form action="" method="POST">
                     <div class="form-group">
-                        <label for="name">Nome</label>
+                        <label for="name">Name</label>
                         <input type="text" class="form-control" id="name" name="name" 
                                value="<?php echo esc_attr($_POST['name'] ?? ''); ?>" />
-                        <span class="text-danger"><?php echo $name_error; ?></span>
+                        <span class="text-danger"><?php echo esc_html($name_error); ?></span>
                     </div>
                     <div class="form-group">
                         <label for="email">E-mail</label>
                         <input type="text" class="form-control" id="email" name="email" 
                                value="<?php echo esc_attr($_POST['email'] ?? ''); ?>" />
-                        <span class="text-danger"><?php echo $email_error; ?></span>
+                        <span class="text-danger"><?php echo esc_html($email_error); ?></span>
                     </div>
-                    <button type="submit" class="btn btn-primary" name="submit">Cadastrar</button>
+                    <button type="submit" class="btn btn-primary" name="submit">Register</button>
                 </form>
             </div>
         </div>
@@ -93,7 +109,7 @@ if (is_front_page()) {
                 <?php 
                 $args = array(
                     'echo'              => true,
-                    'redirect'          => (is_ssl() ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+                    'redirect'          => home_url(),
                     'form_id'           => 'loginform',
                     'label_username'    => __('Username or Email Address'),
                     'label_password'    => __('Password'),
@@ -106,8 +122,6 @@ if (is_front_page()) {
                     'remember'          => true,
                     'value_username'    => '',
                     'value_remember'    => false,
-                    'required_username' => false,
-                    'required_password' => false,
                 );
                 wp_login_form($args);
                 ?>
