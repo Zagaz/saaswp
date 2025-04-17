@@ -1,15 +1,54 @@
 <?php
+$name_error = '';
+$email_error = '';
+$success_message = '';
 
 if (is_front_page()) {
     is_user_logged_in() ? get_header('logged') : get_header('blank');
 } else {
-    !is_user_logged_in() ? get_header('blank') : get_header('logged');
+    is_user_logged_in() ? get_header('logged') : get_header('blank');
 
     if (isset($_POST['submit'])) {
+        $name  = sanitize_text_field($_POST['name'] ?? '');
+        $email = sanitize_email($_POST['email'] ?? '');
 
-        // here
+        if (empty($name)) {
+            $name_error = 'Por favor, preencha seu nome.';
+        }
 
-     
+        if (!is_email($email)) {
+            $email_error = 'Por favor, forneça um e-mail válido.';
+        } elseif (email_exists($email)) {
+            $email_error = 'Este e-mail já está registrado.';
+        }
+
+        if (empty($name_error) && empty($email_error)) {
+            $random_password = wp_generate_password(6, false, false);
+
+            $user_id = wp_create_user($email, $random_password, $email);
+
+            if (!is_wp_error($user_id)) {
+                wp_update_user([
+                    'ID'           => $user_id,
+                    'display_name' => $name,
+                    'first_name'   => $name
+                ]);
+
+                $user = new WP_User($user_id);
+                $user->set_role('subscriber');
+
+                $subject = 'Confirmação de Cadastro';
+                $message = "Olá $name,\n\nSeu cadastro foi realizado com sucesso!\n\nLogin: $email\nSenha: $random_password\n\nAcesse o site aqui: " . home_url();
+
+                if (wp_mail($email, $subject, $message)) {
+                    $success_message = 'User registered successfully.';
+                } else {
+                    $email_error = 'Erro ao enviar o e-mail de confirmação.';
+                }
+            } else {
+                $email_error = 'Erro ao criar o usuário: ' . $user_id->get_error_message();
+            }
+        }
     }
 }
 ?>
@@ -17,34 +56,31 @@ if (is_front_page()) {
 <div class="container">
     <div class="row">
         <div class="col-6">
-            <form action="" method="POST">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" 
-                           value="<?php if (isset($_POST['name'])) { echo esc_attr($_POST['name']); } ?>" />
-                    <span class="text-danger">
-                        <?php
-                        if (!empty($name_error)) {
-                            echo $name_error;
-                        }
-                        ?>
-                    </span>
+            <?php if (!empty($success_message)) : ?>
+                <div class="alert alert-success">
+                    <?php echo $success_message; ?>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" class="form-control" id="email" name="email" 
-                           value="<?php if (isset($_POST['email'])) { echo esc_attr($_POST['email']); } ?>" />
-                    <span class="text-danger">
-                        <?php
-                        if (!empty($email_error)) {
-                            echo $email_error;
-                        }
-                        ?>
-                    </span>
-                </div>
-                <button type="submit" class="btn btn-primary" name="submit">Submit</button>
-            </form>
+            <?php endif; ?>
+
+            <div class="registration-form <?php echo !empty($success_message) ? 'd-none' : ''; ?>">
+                <form action="" method="POST">
+                    <div class="form-group">
+                        <label for="name">Nome</label>
+                        <input type="text" class="form-control" id="name" name="name" 
+                               value="<?php echo esc_attr($_POST['name'] ?? ''); ?>" />
+                        <span class="text-danger"><?php echo $name_error; ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="text" class="form-control" id="email" name="email" 
+                               value="<?php echo esc_attr($_POST['email'] ?? ''); ?>" />
+                        <span class="text-danger"><?php echo $email_error; ?></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="submit">Cadastrar</button>
+                </form>
+            </div>
         </div>
+
         <div class="col-6">
             <div class="login-form">
                 <?php 
