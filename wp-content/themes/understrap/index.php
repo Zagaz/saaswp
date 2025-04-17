@@ -24,10 +24,10 @@ if (is_user_logged_in() && is_front_page()){
             get_template_part('template-parts/tpl-dashboard');//
             break;
         case 'add-income':
-            get_template_part('template-parts/tpl-add-income');//
+            get_template_part('template-parts/tpl-add-income');//DONE
             break;
         case 'add-outcome':
-            get_template_part('template-parts/tpl-add-outcome');//
+            get_template_part('template-parts/tpl-add-outcome');//Done
             break;
         case 'add-category-bills':
             get_template_part('template-parts/tpl-add-category-bills'); //

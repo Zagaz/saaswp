@@ -5,8 +5,7 @@
      exit; // Exit if accessed directly.
    }
    
-include 'tpl-add-model'; 
+//include 'tpl-add-model'; 
 
-
-
+get_template_part('template-parts/tpl-add-model');
 
