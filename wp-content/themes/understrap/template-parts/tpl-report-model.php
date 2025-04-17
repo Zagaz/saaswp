@@ -35,6 +35,14 @@ $posts = get_posts($args);
 ?>
 
 <div class="container table-wrapper table-<?php echo esc_attr($page); ?> ">
+    <?php 
+    if ($page == "full") {
+        $page = "Income and Outcome";
+    }
+    
+    ?>
+    <h2 class="text-center">Your <?php echo esc_html(ucfirst($page)); ?> Bills</h2>
+    <p class="text-center">Here you can view and manage your <?php echo esc_html(ucfirst($page)); ?> bills.</p>
     <table class="table table-hover">
         <thead>
             <tr>
