@@ -37,7 +37,10 @@ if (is_front_page()) {
                 $user = new WP_User($user_id);
                 $user->set_role('subscriber');
                 $subject = 'Registration Confirmation';
-                $message = "Hello $name,\n\nThank you for registering. Your password is: $random_password\n\nPlease log in to your account.";
+                $blogname = get_bloginfo('name');
+                $message = "Hello $name,\n\n Your account has been created successfully.\n\nYou can log in using the following credentials:\n\nUsername: $email\nPassword: $random_password\n\nPlease keep this information safe.\n\nTo log in, please visit: <a href='" . wp_login_url() . "'> LOGIN </a>\n\nIf you did not create this account, please ignore this email.\n\nFor security reasons, we recommend that you change your password after logging in.\n\nThank you for registering with us!\n\nBest regards,\n $blogname";
+                
+                "\n\n Please change your password after logging in.\n\nBest regards,\n $blogname";
 
                 if (wp_mail($email, $subject, $message)) {
                     $success_message = 'User registered successfully.';
