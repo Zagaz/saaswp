@@ -15,8 +15,8 @@ if (isset($_POST["add-{$add_type}-bill"])) {
    $args = array(
       'post_title' => $name,
       'post_content' => $price,
-      'post_type' => $add_type,
-      'post_status' => 'private',
+      'post_type' => $add_type, // Income or Outcome
+      'post_status' => 'private',// Can't be seen by other users
       'post_author' => $user_id,
    );
    $id_post = wp_insert_post($args);
@@ -69,6 +69,7 @@ if (isset($_POST["add-{$add_type}-bill"])) {
             $categories = get_categories(array(
                'taxonomy' => 'billing-category',
                'orderby' => 'name',
+               'order' => 'ASC',
                'hide_empty' => false,
             ));
 
