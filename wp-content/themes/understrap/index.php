@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
             $message .= "To log in, please visit: " . wp_login_url() . "\n\n";
             $message .= "If you did not create this account, please ignore this email.\n\n";
             $message .= "For security reasons, we recommend that you change your password after logging in.\n\n";
-            $message .= "Thank you for registering with us!\n\nBest regards,\n$blogname";
+            $message .= "Thank you for registering with us!\n\nBest regards,\n$blogname Team";
 
             // Send email
             if (wp_mail($email, $subject, $message)) {
