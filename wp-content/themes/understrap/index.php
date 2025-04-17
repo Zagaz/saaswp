@@ -13,13 +13,13 @@ if (is_front_page()) {
         $email = sanitize_email($_POST['email'] ?? '');
 
         if (empty($name)) {
-            $name_error = 'Por favor, preencha seu nome.';
+            $name_error = 'Please enter your name.';
         }
 
         if (!is_email($email)) {
-            $email_error = 'Por favor, forneça um e-mail válido.';
+            $email_error = 'Please enter a valid email address.';
         } elseif (email_exists($email)) {
-            $email_error = 'Este e-mail já está registrado.';
+            $email_error = 'This email address is already registered.';
         }
 
         if (empty($name_error) && empty($email_error)) {
@@ -36,17 +36,16 @@ if (is_front_page()) {
 
                 $user = new WP_User($user_id);
                 $user->set_role('subscriber');
-
-                $subject = 'Confirmação de Cadastro';
-                $message = "Olá $name,\n\nSeu cadastro foi realizado com sucesso!\n\nLogin: $email\nSenha: $random_password\n\nAcesse o site aqui: " . home_url();
+                $subject = 'Registration Confirmation';
+                $message = "Hello $name,\n\nThank you for registering. Your password is: $random_password\n\nPlease log in to your account.";
 
                 if (wp_mail($email, $subject, $message)) {
                     $success_message = 'User registered successfully.';
                 } else {
-                    $email_error = 'Erro ao enviar o e-mail de confirmação.';
+                    $email_error = 'Error sending email. Please try again.';
                 }
             } else {
-                $email_error = 'Erro ao criar o usuário: ' . $user_id->get_error_message();
+                $email_error = 'Error creating user: ' . $user_id->get_error_message();
             }
         }
     }
