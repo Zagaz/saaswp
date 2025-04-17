@@ -55,7 +55,7 @@ if (isset($_POST["add-{$add_type}-bill"])) {
 
             <div class="form-group mb-3">
                <label for="bill_price">Price</label>
-               <small> (E.g. 123.45)</small>
+               <small> (E.g. 42.00)</small>
                 <input type="number" name="bill_price" id="bill_price" class="form-control" step="0.01" required>
                
             </div>
@@ -64,6 +64,11 @@ if (isset($_POST["add-{$add_type}-bill"])) {
                <label for="bill_date">Date</label>
                <input type="date" name="bill_date" id="bill_date" class="form-control" required>
             </div>
+            <script>
+               //Set default date to today
+              var today = new Date();
+              document.getElementById("bill_date").defaultValue = today.toISOString().split('T')[0];
+            </script>
             <?php
             // Wordpress get all categories and make a select
             $categories = get_categories(array(
