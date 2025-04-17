@@ -1,3 +1,9 @@
-<h1>
-   add income
-</h1>
+<?php
+//You shall not pass!
+
+ if (!defined('ABSPATH')) {
+     exit; // Exit if accessed directly.
+   }
+   
+include 'tpl-add-model'; 
+
