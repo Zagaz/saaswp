@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
 
     // If no errors, create the user
     if (empty($name_error) && empty($email_error)) {
-        $random_password = wp_generate_password(6, false, false);
+        $random_password = wp_generate_password(6, true, true);
 
         $user_id = wp_create_user($email, $random_password, $email);
 
