@@ -18,8 +18,9 @@
                <input type="date" name="bill_date" id="bill_date" placeholder="Bill Date" class="form-control" required>
             </div>
 
-            <div class="form-group">
-               <input type="submit" name="add-outcome-bill" id="add-outcome-bill" value="Add Bill" class="btn btn-success w-100">
+            <div class="form-group d-flex gap-2">
+               <input type="submit" name="add-outcome-bill" id="add-outcome-bill" value="Add Bill" class="btn btn-success">
+               <button type="reset" class="btn btn-secondary">Clear All</button>
             </div>
 
          </form>

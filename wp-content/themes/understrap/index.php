@@ -113,6 +113,9 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+<?php
+// The login and registration form only apprears if the user is not logged in
+if (!is_user_logged_in() && is_front_page()): ?>
 
 <div class="container">
     <div class="row">
@@ -151,27 +154,35 @@ if (isset($_POST['submit'])) {
             <p>Already have an account? Log in below.</p>
             <div class="login-form">
                 <?php 
-                $args = array(
-                    'echo'              => true,
-                    'redirect'          => home_url(),
-                    'form_id'           => 'loginform',
-                    'label_username'    => __('Username or Email Address'),
-                    'label_password'    => __('Password'),
-                    'label_remember'    => __('Remember Me'),
-                    'label_log_in'      => __('Log In'),
-                    'id_username'       => 'user_login',
-                    'id_password'       => 'user_pass',
-                    'id_remember'       => 'rememberme',
-                    'id_submit'         => 'wp-submit',
-                    'remember'          => true,
-                    'value_username'    => '',
-                    'value_remember'    => false,
-                );
-                wp_login_form($args);
+                if (function_exists('wp_login_form')) {
+                    $args = array(
+                        'echo'              => true,
+                        'redirect'          => home_url(),
+                        'form_id'           => 'loginform',
+                        'label_username'    => __('Username or Email Address'),
+                        'label_password'    => __('Password'),
+                        'label_remember'    => __('Remember Me'),
+                        'label_log_in'      => __('Log In'),
+                        'id_username'       => 'user_login',
+                        'id_password'       => 'user_pass',
+                        'id_remember'       => 'rememberme',
+                        'id_submit'         => 'wp-submit',
+                        'remember'          => true,
+                        'value_username'    => '',
+                        'value_remember'    => false,
+                    );
+                    wp_login_form($args);
+                } else {
+                    echo '<p>Login functionality is currently unavailable.</p>';
+                }
                 ?>
             </div>
         </div>
     </div>
 </div>
 
-<?php get_footer(); ?>
+<?php endif; 
+
+
+
+ get_footer(); ?>
