@@ -27,3 +27,10 @@ function enqueue_jquery_cdn() {
     wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.6.0.min.js', array(), '3.6.0', true);
 }
 add_action('wp_enqueue_scripts', 'enqueue_jquery_cdn');
+
+// enqueue styles
+function enqueue_styles() {
+    // Enqueue your custom stylesheet
+    wp_enqueue_style('custom-style', get_template_directory_uri() . '/css/style.css', array(), '1.0.0');
+}
+add_action('wp_enqueue_scripts', 'enqueue_styles');

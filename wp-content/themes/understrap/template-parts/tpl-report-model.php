@@ -35,11 +35,11 @@ $posts = get_posts($args);
 ?>
 
 <div class="container table-wrapper table-<?php echo esc_attr($page); ?> ">
-    <?php 
+    <?php
     if ($page == "full") {
-        $page = "Income and Outcome";
+        $page = "Income and utcome";
     }
-    
+
     ?>
     <h2 class="text-center">Your <?php echo esc_html(ucfirst($page)); ?> Bills</h2>
     <p class="text-center">Here you can view and manage your <?php echo esc_html(ucfirst($page)); ?> bills.</p>
@@ -55,13 +55,21 @@ $posts = get_posts($args);
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($posts as $post) {
+            <?php
+            $total = 0.00;
+            foreach ($posts as $post) {
                 $id_data = $post->ID;
                 $category = get_post_type($id_data); // Get the post type (income or outcome)
                 $name = get_field('bill_name', $id_data);
                 $price = get_field('bill_price', $id_data);
                 $date = get_field('bill_date', $id_data);
                 $post_id = $post->ID;
+                if ($category == "income") {
+                    $total += $price;
+                } elseif ($category == "outcome") {
+                    $total -= $price;
+                }
+
             ?>
                 <tr>
                     <td><?php echo esc_html($post->ID); ?></td>
@@ -77,6 +85,7 @@ $posts = get_posts($args);
                         </button>
                     </td>
                 </tr>
+
 
                 <!-- Bootstrap Modal -->
                 <div class="modal fade" id="deleteModal-<?php echo esc_attr($post_id); ?>" tabindex="-1" aria-labelledby="deleteModalLabel-<?php echo esc_attr($post_id); ?>" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -98,6 +107,25 @@ $posts = get_posts($args);
                     </div>
                 </div>
             <?php } ?>
+        <tfoot>
+            <tr>
+                <th scope="col">Bill ID</th>
+                <th scope="col">Category</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Date</th>
+                <th scope="col">Action</th>
+            </tr>
+            <tr>
+               
+                <td colspan="12" class="text-center">
+                    <?php
+                    $color = ($total > 0)? 'income' : 'outcome' ; 
+                    ?>
+                    <h3 >Total: <span class="text-<?php echo esc_attr($color); ?>"> <?php echo esc_html($total); ?> </span> </h3>
+                </td>
+            </tr>
+        </tfoot>
         </tbody>
     </table>
 </div>
