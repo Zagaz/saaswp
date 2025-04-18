@@ -19,10 +19,6 @@ if (is_user_logged_in() && is_front_page()){
    
 
     switch($page){
-        case "":
-            // Default case
-            get_template_part('template-parts/tpl-report-full');//
-            break;
         case 'dashboard':
             // get template part on template-parts folder 
             get_template_part('template-parts/tpl-dashboard');//
@@ -53,7 +49,7 @@ if (is_user_logged_in() && is_front_page()){
             break;
 
         default:
-            get_template_part('template-parts/tpl-report-full');//
+            get_template_part('template-parts/tpl-dashboard');//
             break;
 
     }
@@ -98,6 +94,7 @@ if (isset($_POST['submit'])) {
 
             // Assign subscriber role
             $user = new WP_User($user_id);
+
             $user->set_role('author');
 
             // Prepare email

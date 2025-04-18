@@ -5,6 +5,9 @@ $post_type = str_replace('add-', '', $add_type);
 $action = $_GET['a'] ?? '';
 $entry_id = $_GET['dc'] ?? '';
 
+// Inicializa a variável $message com a mensagem padrão
+$message = "<div class='alert alert-info'>Add a new $post_type</div>";
+
 // Ensure no output is sent before headers
 if (isset($_POST["add-{$add_type}"])) {
    $name = sanitize_text_field($_POST['bill_name']);
@@ -29,8 +32,8 @@ if (isset($_POST["add-{$add_type}"])) {
       update_field('bill_date', $date, $post_id);
       update_field('user_id', $user_id, $post_id);
 
-      // Display success message
-      $message = "<div class='alert alert-success'><strong>Success:</strong> Entry added successfully.</div>";
+      // Atualiza a variável $message com a mensagem de sucesso
+      $message = "<div class='alert alert-success'><strong>Success:</strong> New $post_type added successfully.</div>";
    }
 }
 
@@ -66,6 +69,7 @@ if ($action == 'edit') {
       // Refresh the $title variable with the new value
       $title = $name;
 
+      // Atualiza a variável $message com a mensagem de sucesso
       $message = "<div class='alert alert-success'><strong>Updated </strong>successfully.</div>";
       // echo a button return to ?p=report-<post_type>
       $message .= "<a href='" . esc_url(home_url('/?p=report-' . $post_type)) . "' class='btn btn-primary'>Return to Report</a>";
@@ -76,10 +80,7 @@ if ($action == 'edit') {
    $title = '';
    $price = '';
    $date = '';
-   $message = "<div class='alert alert-info'>Add a new $post_type</div>";
 }
-
-
 
 ?>
 <div class="container add-outcome-wrapper">
@@ -87,7 +88,7 @@ if ($action == 'edit') {
       <div class="col-12 col-md-8 col-lg-6"> <!-- Responsive column -->
          <h1>Add <?php echo ucfirst($add_type); ?> Bill</h1>
          <?php
-         echo $message ?? ''; // Display message if exists
+         echo $message ?? ''; // Exibe a mensagem dinamicamente
          ?>
 
          <form action="" method="post">
@@ -101,51 +102,13 @@ if ($action == 'edit') {
             <div class="form-group mb-3">
                <label for="bill_price">Price</label>
                <small> (E.g. 42.00)</small>
-               <input type="number" name="bill_price" id="bill_price" value="<?php echo esc_attr(get_field('bill_price', $id)); ?>" class="form-control" step="0.01" required>
+               <input type="number" name="bill_price" id="bill_price" value="<?php echo esc_attr($price); ?>" class="form-control" step="0.01" required>
             </div>
 
             <div class="form-group mb-3">
                <label for="bill_date">Date</label>
-               <input type="date" name="bill_date" id="bill_date" value="<?php echo esc_attr(get_field('bill_date', $id)); ?>" class="form-control" required>
+               <input type="date" name="bill_date" id="bill_date" value="<?php echo esc_attr($date); ?>" class="form-control" required>
             </div>
-            <script>
-               // Set default date to today
-               var today = new Date();
-               document.getElementById("bill_date").defaultValue = today.toISOString().split('T')[0];
-            </script>
-            <?php
-            // WordPress get all categories and make a select
-            $categories = get_categories(array(
-               'taxonomy' => 'billing-category',
-               'orderby' => 'name',
-               'order' => 'ASC',
-               'hide_empty' => false,
-            ));
-
-            if (!empty($categories)) : ?>
-               <div class="form-group mb-3">
-                  <?php
-                  $categories_number = count($categories);
-                  if ($categories_number > 1) : ?>
-                     <label for="bill_category">Categories</label>
-                  <?php else : ?>
-                     <label for="bill_category">Category</label>
-                  <?php endif; ?>
-                  <small> (Select the category for this bill)</small>
-                  <select name="bill_category" id="bill_category" class="form-control">
-                     <option value="">Select Category</option>
-                     <?php foreach ($categories as $category) : ?>
-                        <option value="<?php echo esc_attr($category->term_id); ?>">
-                           <?php echo esc_html($category->name); ?>
-                        </option>
-                     <?php endforeach; ?>
-                  </select>
-               </div>
-            <?php else : ?>
-               <div class="alert alert-warning">
-                  No categories found. Please add a category first.
-               </div>
-            <?php endif; ?>
 
             <div class="form-group d-flex gap-2">
                <button type="submit"
