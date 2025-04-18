@@ -2,11 +2,12 @@
 // This will check if it is income or outcome;
 $add_type  = $_GET['p'];
 $post_type = str_replace('add-', '', $add_type);
+
 $action = $_GET['a'] ?? '';
 $entry_id = $_GET['dc'] ?? '';
 
 // Inicializa a variável $message com a mensagem padrão
-$message = "<div class='alert alert-info'>Add a new $post_type</div>";
+$message = "<div class='alert alert-info'>Add a new  $post_type.</div>";
 
 // Ensure no output is sent before headers
 if (isset($_POST["add-{$add_type}"])) {
@@ -86,7 +87,7 @@ if ($action == 'edit') {
 <div class="container add-outcome-wrapper">
    <div class="row justify-content-center">
       <div class="col-12 col-md-8 col-lg-6"> <!-- Responsive column -->
-         <h1>Add <?php echo ucfirst($add_type); ?> Bill</h1>
+         <h1><?php echo  ucwords( "$action $post_type"); ?></h1>
          <?php
          echo $message ?? ''; // Exibe a mensagem dinamicamente
          ?>

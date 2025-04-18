@@ -29,9 +29,6 @@ if (is_user_logged_in() && is_front_page()){
         case 'add-outcome':
             get_template_part('template-parts/tpl-add-outcome');//Done
             break;
-        case 'add-category-bills':
-            get_template_part('template-parts/tpl-add-category-bills'); //
-            break;
         case 'report-income':
             get_template_part('template-parts/tpl-report-income');//
             break;
