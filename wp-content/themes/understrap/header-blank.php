@@ -12,6 +12,5 @@
 	</head>
 	<body <?php body_class('body-full'); ?> >
 	<?php do_action( 'wp_body_open' ); ?>
-	<h1>Hello from header-blank</h1>
-
+	
 	

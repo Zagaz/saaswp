@@ -12,46 +12,38 @@ $success_message = '';
 // Load the appropriate header based on login status
 is_user_logged_in() ? get_header('logged') : get_header('blank');
 
-if (is_user_logged_in() && is_front_page()){
-    
+if (is_user_logged_in() && is_front_page()) {
     $page = $_GET['p'] ?? '';
 
-   
-
-    switch($page){
+    switch ($page) {
         case 'dashboard':
-            // get template part on template-parts folder 
-            get_template_part('template-parts/tpl-dashboard');//
+            get_template_part('template-parts/tpl-dashboard');
             break;
         case 'add-income':
-            get_template_part('template-parts/tpl-add-income');//DONE
+            get_template_part('template-parts/tpl-add-income');
             break;
         case 'add-outcome':
-            get_template_part('template-parts/tpl-add-outcome');//Done
+            get_template_part('template-parts/tpl-add-outcome');
             break;
         case 'report-income':
-            get_template_part('template-parts/tpl-report-income');//
+            get_template_part('template-parts/tpl-report-income');
             break;
         case 'report-outcome':
-            get_template_part('template-parts/tpl-report-outcome');//
+            get_template_part('template-parts/tpl-report-outcome');
             break;
         case 'report-full':
-            get_template_part('template-parts/tpl-report-full');//
+            get_template_part('template-parts/tpl-report-full');
             break;
         case 'edit-income':
-            get_template_part('template-parts/tpl-edit-income');//
+            get_template_part('template-parts/tpl-edit-income');
             break;
         case 'edit-outcome':
-            get_template_part('template-parts/tpl-edit-outcome');//
+            get_template_part('template-parts/tpl-edit-outcome');
             break;
-
         default:
-            get_template_part('template-parts/tpl-dashboard');//
+            get_template_part('template-parts/tpl-dashboard');
             break;
-
     }
-
-
 }
 
 if (isset($_POST['submit'])) {
@@ -91,7 +83,6 @@ if (isset($_POST['submit'])) {
 
             // Assign subscriber role
             $user = new WP_User($user_id);
-
             $user->set_role('author');
 
             // Prepare email
@@ -117,9 +108,8 @@ if (isset($_POST['submit'])) {
         }
     }
 }
-?>
-<?php
-// The login and registration form only apprears if the user is not logged in
+
+// The login and registration form only appears if the user is not logged in
 if (!is_user_logged_in() && is_front_page()): ?>
 
 <div class="container">
@@ -136,7 +126,7 @@ if (!is_user_logged_in() && is_front_page()): ?>
 
             <div class="registration-form <?php echo !empty($success_message) ? 'd-none' : ''; ?>">
                 <form action="" method="POST">
-                    <div class="form-group">
+                    <div class="">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" id="name" name="name" 
                                value="<?php echo esc_attr($_POST['name'] ?? ''); ?>" />
@@ -175,6 +165,9 @@ if (!is_user_logged_in() && is_front_page()): ?>
                         'remember'          => true,
                         'value_username'    => '',
                         'value_remember'    => false,
+                        'form_class'        => 'form-group',
+                        'before'            => '<div class="mb-3">',
+                        'after'             => '</div>',
                     );
                     wp_login_form($args);
                 } else {
@@ -186,8 +179,6 @@ if (!is_user_logged_in() && is_front_page()): ?>
     </div>
 </div>
 
-<?php endif; 
+<?php endif;
 
-
-
- get_footer(); ?>
+get_footer(); ?>
