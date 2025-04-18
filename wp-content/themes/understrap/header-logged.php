@@ -36,8 +36,8 @@
 		  Registration
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="?p=add-income">Add Income</a></li>
-            <li><a class="dropdown-item" href="?p=add-outcome">Add Outcome</a></li>
+            <li><a class="dropdown-item" href="?p=add-income&a=add">Add Income</a></li>
+            <li><a class="dropdown-item" href="?p=add-outcome&a=add">Add Outcome</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="?p=add-category-bills">New Categories</a></li>
           </ul>

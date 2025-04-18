@@ -1,65 +1,40 @@
 <?php
 // This will check if it is income or outcome;
 $add_type  = $_GET['p'];
-$add_type = str_replace('add-', '', $add_type);
-$is_edit = false;  
+$action = $_GET['a'] ?? '';
+$entry_id = $_GET['dc'] ?? '';
 
-// check if $add_type string has "edit-";
-if (strpos($add_type, 'edit-') !== false) {
-   $is_edit = true;  
-}
 
 echo '<pre>';
-var_dump($is_edit);
+echo "Add type: ";
+var_dump($add_type);
+echo "<br>";
+echo "Action: ";
+var_dump($action);
+echo "<br>";
+echo "Entry ID: ";
+var_dump($entry_id);
+echo "-----------------";
 echo '</pre>';
 
 
 
-if (isset($_POST["add-{$add_type}-bill"])) {
-   // Sanitize user inputs
-   $name = sanitize_text_field($_POST['bill_name'] ?? '');
-   $price = sanitize_text_field($_POST['bill_price'] ?? '');
-   $date = sanitize_text_field($_POST['bill_date'] ?? '');
-   $category = sanitize_text_field($_POST['bill_category'] ?? '');
+if (isset($_POST["add-{$add_type}"])) {
+  echo "Add {$add_type} button clicked";
+  // Get the data from inputs and sanitize it and register it.
+  
 
-   $wpdb = $GLOBALS['wpdb'];
-   $user_id = get_current_user_id();
-   $args = array(
-      'post_title' => $name,
-      'post_content' => $price,
-      'post_type' => $add_type, // Income or Outcome
-      'post_status' => 'private',// Can't be seen by other users
-      'post_author' => $user_id,
-   );
-   $id_post = wp_insert_post($args);
-   // ACF fields UPDATE
-   update_field('user_id', $user_id, $id_post);
-   update_field('bill_name', $name, $id_post);
-   update_field('bill_price', $price, $id_post);
-   update_field('bill_date', $date, $id_post);
-   update_field('bill_category', $category, $id_post);
+   
 
-   // Check if the post was created successfully
-   if (is_wp_error($id_post)) {
-      // Handle error
-      $message =  '<div class="alert alert-danger">Error creating post: ' . $id_post->get_error_message() . '</div>';
-   } else {
-      // Success message
-      $message =  '<div class="alert alert-success">Bill created successfully!</div>';
-   }
 }
 
-// Access the global variable
-global $edit_post;
+if (isset($_GET['a']) === 'edit') {
+  
+   echo "Edit mode";
 
-if ($edit_post) {
-    $id = $edit_post->ID;
-    $title = $edit_post->post_title;
-    $content = $edit_post->post_content;
-    $date = $edit_post->post_date;
-    $modified = $edit_post->post_modified;
-    $status = $edit_post->post_status;
 }
+
+
 ?>
 <div class="container add-outcome-wrapper">
    <div class="row justify-content-center">
@@ -128,7 +103,11 @@ if ($edit_post) {
             <?php endif; ?>
 
             <div class="form-group d-flex gap-2">
-               <input type="submit" name="add-<?php echo esc_attr($add_type); ?>-bill" id="add-<?php echo esc_attr($add_type); ?>-bill" value="Add" class="btn btn-success">
+               <?php // ACTION BUTTON ?>
+               <input type="submit" 
+               name="add-<?php echo esc_attr($add_type);?>" 
+               id="add-<?php echo esc_attr($add_type); ?>-bill" 
+               value="TODO">
                <button type="reset" class="btn btn-secondary" onclick="this.form.reset()">Clear All</button>
             </div>
 
