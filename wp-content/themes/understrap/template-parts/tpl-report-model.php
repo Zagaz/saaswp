@@ -46,7 +46,10 @@ if (count($posts) > 0) :?>
 <div class="container table-wrapper table-<?php echo esc_attr($page); ?> ">
     <!-- Add New Button -->
     <div class="d-flex justify-content-start mb-3">
-        <a href="?p=add-<?php echo esc_attr($page); ?>&a=add" class="btn btn-success">Add New</a>
+    
+            <a href="?p=add-income&a=add" class="btn btn-success">Add Income</a>
+            &nbsp;
+            <a href="?p=add-outcome&a=add" class="btn btn-info">Add Outcome</a> 
     </div>
     <?php
     if ($page == "full") {
