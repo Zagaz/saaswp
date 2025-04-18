@@ -2,6 +2,18 @@
 // This will check if it is income or outcome;
 $add_type  = $_GET['p'];
 $add_type = str_replace('add-', '', $add_type);
+$is_edit = false;  
+
+// check if $add_type string has "edit-";
+if (strpos($add_type, 'edit-') !== false) {
+   $is_edit = true;  
+}
+
+echo '<pre>';
+var_dump($is_edit);
+echo '</pre>';
+
+
 
 if (isset($_POST["add-{$add_type}-bill"])) {
    // Sanitize user inputs
