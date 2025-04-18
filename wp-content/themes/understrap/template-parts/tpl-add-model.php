@@ -21,84 +21,79 @@ echo '</pre>';
 
 // Add MODE
 if (isset($_POST["add-{$add_type}"])) {
-  echo "Add {$add_type} button clicked";
-  $name = $_POST['bill_name'];
-  $price = $_POST['bill_price'];
-  $date = $_POST['bill_date'];
-  
-  
-  global $wpdb;
-  $user_id = get_current_user_id();
+    $name = sanitize_text_field($_POST['bill_name']);
+    $price = sanitize_text_field($_POST['bill_price']);
+    $date = sanitize_text_field($_POST['bill_date']);
 
-  $post_id = wp_insert_post(array(
-   'post_author' => $user_id,
-   'post_status' => 'private',
-   'post_type' =>$post_type,
-   'post_title' => $name,
-   'post_content' => $post_type,
-   
-));
+    global $wpdb;
+    $user_id = get_current_user_id();
 
-   if ($post_id){
-      
+    $post_id = wp_insert_post(array(
+        'post_author' => $user_id,
+        'post_status' => 'private', // Keep the post private
+        'post_type'   => $post_type,
+        'post_title'  => $name,
+        'post_content' => '',
+    ));
 
-      // Add custom fields
-      update_field('bill_name', $name, $post_id);
-      update_field('bill_price', $price, $post_id);
-      update_field('bill_date', $date, $post_id);
-      update_field('user_id', $user_id, $post_id); // Add the user ID to the post
+    if ($post_id) {
+        // Add custom fields
+        update_field('bill_name', $name, $post_id);
+        update_field('bill_price', $price, $post_id);
+        update_field('bill_date', $date, $post_id);
+        update_field('user_id', $user_id, $post_id);
 
-   
-
-      // retrive the new post ID
-      $id = $post_id;
-      $message = "<div class='alert alert-success'>Bill added successfully!#$id</div>";
-      // refresh page
-
-   }
+        // Retrieve the new post ID
+        $id = $post_id;
+        $message = "<div class='alert alert-success'>Bill added successfully!#$id</div>";
+        // hide .add-outcome-wrapper
+        echo "<script>document.querySelector('.add-outcome-wrapper').style.display = 'none';</script>";
+    }
 }
 
 // Edit MODE
 
 //if  $action == 'edit' - Get the $entry_id and update the post
 if ($action == 'edit') {
-   $id = $entry_id;
-   $title = get_the_title($id);
-   $price = get_field('bill_price', $id);
-   $date = get_field('bill_date', $id);
-   $message = "<div class='alert alert-info'>Editing bill: $title</div>";
-   // Check if the form is submitted
-   if (isset($_POST["add-{$add_type}"])) {
-      $name = $_POST['bill_name'];
-      $price = $_POST['bill_price'];
-      $date = $_POST['bill_date'];
+    $id = $entry_id;
+    $post = get_post($id); // Use get_post() to retrieve the raw title
+    $title = $post->post_title; // Get the raw title without "Private:"
+    $price = get_field('bill_price', $id);
+    $date = get_field('bill_date', $id);
+    $message = "<div class='alert alert-info'>Editing bill: $title</div>";
 
-      // Update the post
-      $post_data = array(
-         'ID' => $id,
-         'post_title' => $name,
-         'post_content' => $post_type,
-         'post_status' => 'private',
-      );
+    if (isset($_POST["add-{$add_type}"])) {
+        $name = sanitize_text_field($_POST['bill_name']);
+        $price = sanitize_text_field($_POST['bill_price']);
+        $date = sanitize_text_field($_POST['bill_date']);
 
-      // Update the post in the database
-      wp_update_post($post_data);
+        // Update the post
+        $post_data = array(
+            'ID'           => $id,
+            'post_title'   => $name,
+            'post_content' => '',
+            'post_status'  => 'private', // Keep the post private
+        );
 
-      // Update custom fields
-      update_field('bill_name', $name, $id);
-      update_field('bill_price', $price, $id);
-      update_field('bill_date', $date, $id);
+        wp_update_post($post_data);
 
-      // Display success message
-      $message = "<div class='alert alert-success'>Bill updated successfully!</div>";
-   }  
+        // Update custom fields
+        update_field('bill_name', $name, $id);
+        update_field('bill_price', $price, $id);
+        update_field('bill_date', $date, $id);
+
+        // Refresh the $title variable with the new value
+        $title = $name;
+
+        $message = "<div class='alert alert-success'>Bill updated successfully!</div>";
+    }
 } else {
-   // Add MODE
-   $id = '';
-   $title = '';
-   $price = '';
-   $date = '';
-   $message = "<div class='alert alert-info'>Adding new bill</div>";
+    // Add MODE
+    $id = '';
+    $title = '';
+    $price = '';
+    $date = '';
+    $message = "<div class='alert alert-info'>Adding new bill</div>";
 }
 
 
