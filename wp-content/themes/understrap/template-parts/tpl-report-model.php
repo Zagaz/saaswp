@@ -78,7 +78,7 @@ $posts = get_posts($args);
                     <td><?php echo esc_html($price); ?></td>
                     <td><?php echo esc_html($date); ?></td>
                     <td>
-                        <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="btn btn-primary">View</a>
+                        <a href="?p=edit-<?php echo esc_attr($category);?>&dc=<?php echo esc_attr($post_id);?>" class="btn btn-primary">View</a>
                         <!-- Delete Button with Modal Trigger -->
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-<?php echo esc_attr($post_id); ?>">
                             Delete

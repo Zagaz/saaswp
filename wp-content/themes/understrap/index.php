@@ -41,6 +41,13 @@ if (is_user_logged_in() && is_front_page()){
         case 'report-full':
             get_template_part('template-parts/tpl-report-full');//
             break;
+        case 'edit-income':
+            get_template_part('template-parts/tpl-edit-income');//
+            break;
+        case 'edit-outcome':
+            get_template_part('template-parts/tpl-edit-outcome');//
+            break;
+
         default:
             get_template_part('template-parts/tpl-dashboard');//
             break;

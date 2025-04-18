@@ -36,6 +36,18 @@ if (isset($_POST["add-{$add_type}-bill"])) {
       $message =  '<div class="alert alert-success">Bill created successfully!</div>';
    }
 }
+
+// Access the global variable
+global $edit_post;
+
+if ($edit_post) {
+    $id = $edit_post->ID;
+    $title = $edit_post->post_title;
+    $content = $edit_post->post_content;
+    $date = $edit_post->post_date;
+    $modified = $edit_post->post_modified;
+    $status = $edit_post->post_status;
+}
 ?>
 <div class="container add-outcome-wrapper">
    <div class="row justify-content-center">
@@ -50,19 +62,19 @@ if (isset($_POST["add-{$add_type}-bill"])) {
             <div class="form-group mb-3">
                <label for="bill_name">Name</label>
                <small> (E.g. Electricity, Water, etc.)</small>
-               <input type="text" name="bill_name" id="bill_name" class="form-control" required>
+               <input type="text" name="bill_name" id="bill_name" value="<?php echo esc_attr($title); ?>" class="form-control" required>
             </div>
 
             <div class="form-group mb-3">
                <label for="bill_price">Price</label>
                <small> (E.g. 42.00)</small>
-                <input type="number" name="bill_price" id="bill_price" class="form-control" step="0.01" required>
+                <input type="number" name="bill_price" id="bill_price" value="<?php echo esc_attr(get_field('bill_price', $id)); ?>" class="form-control" step="0.01" required>
                
             </div>
 
             <div class="form-group mb-3">
                <label for="bill_date">Date</label>
-               <input type="date" name="bill_date" id="bill_date" class="form-control" required>
+               <input type="date" name="bill_date" id="bill_date" value="<?php echo esc_attr(get_field('bill_date', $id)); ?>" class="form-control" required>
             </div>
             <script>
                //Set default date to today
