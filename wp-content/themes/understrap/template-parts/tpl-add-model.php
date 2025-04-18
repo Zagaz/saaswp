@@ -5,7 +5,7 @@ $post_type = str_replace('add-', '', $add_type);
 $action = $_GET['a'] ?? '';
 $entry_id = $_GET['dc'] ?? '';
 
-
+/*
 echo '<pre>';
 echo "Add type: ";
 var_dump($add_type);
@@ -17,6 +17,7 @@ echo "Entry ID: ";
 var_dump($entry_id);
 echo "-----------------";
 echo '</pre>';
+*/
 
 
 // Add MODE
@@ -60,7 +61,7 @@ if ($action == 'edit') {
     $title = $post->post_title; // Get the raw title without "Private:"
     $price = get_field('bill_price', $id);
     $date = get_field('bill_date', $id);
-    $message = "<div class='alert alert-info'>Editing bill: $title</div>";
+    $message = "<div class='alert alert-info'><strong> Editing:</strong> $title</div>";
 
     if (isset($_POST["add-{$add_type}"])) {
         $name = sanitize_text_field($_POST['bill_name']);
@@ -85,7 +86,8 @@ if ($action == 'edit') {
         // Refresh the $title variable with the new value
         $title = $name;
 
-        $message = "<div class='alert alert-success'>Bill updated successfully!</div>";
+        $message = "<div class='alert alert-success'><strong>Updated </strong>successfully.</div>";
+        
     }
 } else {
     // Add MODE
