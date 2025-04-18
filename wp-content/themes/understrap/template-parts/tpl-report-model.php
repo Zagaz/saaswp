@@ -32,7 +32,13 @@ $args = array(
 
 // Fetch posts
 $posts = get_posts($args);
-?>
+
+if (count($posts) == 0) {
+    echo "<div class='container  alert alert-info'>No bills found.</div>";
+    // Insert a message if no posts are found
+}
+
+if (count($posts) > 0) :?>
 
 <div class="container table-wrapper table-<?php echo esc_attr($page); ?> ">
     <?php
@@ -129,3 +135,6 @@ $posts = get_posts($args);
         </tbody>
     </table>
 </div>
+
+<?php
+endif; // End of posts check
