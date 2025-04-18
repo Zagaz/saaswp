@@ -1,6 +1,6 @@
-<h1>Edit INCOME</h1>
-
 <?php 
+// This will check if it is income or outcome;
+
 
 $id = $_GET['dc'] ?? '';
 $post = get_post($id);

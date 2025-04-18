@@ -5,22 +5,7 @@ $post_type = str_replace('add-', '', $add_type);
 $action = $_GET['a'] ?? '';
 $entry_id = $_GET['dc'] ?? '';
 
-/*
-echo '<pre>';
-echo "Add type: ";
-var_dump($add_type);
-echo "<br>";
-echo "Action: ";
-var_dump($action);
-echo "<br>";
-echo "Entry ID: ";
-var_dump($entry_id);
-echo "-----------------";
-echo '</pre>';
-*/
-
-
-// Add MODE
+// Ensure no output is sent before headers
 if (isset($_POST["add-{$add_type}"])) {
     $name = sanitize_text_field($_POST['bill_name']);
     $price = sanitize_text_field($_POST['bill_price']);
@@ -44,17 +29,13 @@ if (isset($_POST["add-{$add_type}"])) {
         update_field('bill_date', $date, $post_id);
         update_field('user_id', $user_id, $post_id);
 
-        // Retrieve the new post ID
-        $id = $post_id;
-        $message = "<div class='alert alert-success'>Bill added successfully!#$id</div>";
-        // hide .add-outcome-wrapper
-        echo "<script>document.querySelector('.add-outcome-wrapper').style.display = 'none';</script>";
+        
+
+       
     }
 }
 
 // Edit MODE
-
-//if  $action == 'edit' - Get the $entry_id and update the post
 if ($action == 'edit') {
     $id = $entry_id;
     $post = get_post($id); // Use get_post() to retrieve the raw title
@@ -87,7 +68,9 @@ if ($action == 'edit') {
         $title = $name;
 
         $message = "<div class='alert alert-success'><strong>Updated </strong>successfully.</div>";
-        
+        // echo a buton return to ?p=report-<post_type>
+         $message .= "<a href='" . esc_url(home_url('/?p=report-' . $post_type)) . "' class='btn btn-primary'>Return to Report</a>";
+         
     }
 } else {
     // Add MODE
@@ -97,11 +80,6 @@ if ($action == 'edit') {
     $date = '';
     $message = "<div class='alert alert-info'>Adding new bill</div>";
 }
-
-
-
-
-
 ?>
 <div class="container add-outcome-wrapper">
    <div class="row justify-content-center">

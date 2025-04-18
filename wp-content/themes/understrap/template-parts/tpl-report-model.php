@@ -4,6 +4,9 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
+// Initialize $page with a default value
+$page = 'default'; // Replace 'default' with an appropriate fallback value
+
 // Get the current page from the query string
 if (isset($_GET['p'])) {
     $page = $_GET['p'];
@@ -41,6 +44,10 @@ if (count($posts) == 0) {
 if (count($posts) > 0) :?>
 
 <div class="container table-wrapper table-<?php echo esc_attr($page); ?> ">
+    <!-- Add New Button -->
+    <div class="d-flex justify-content-start mb-3">
+        <a href="?p=add-<?php echo esc_attr($page); ?>&a=add" class="btn btn-success">Add New</a>
+    </div>
     <?php
     if ($page == "full") {
         $page = "Income and utcome";
@@ -49,6 +56,7 @@ if (count($posts) > 0) :?>
     ?>
     <h2 class="text-center">Your <?php echo esc_html(ucfirst($page)); ?> Bills</h2>
     <p class="text-center">Here you can view and manage your <?php echo esc_html(ucfirst($page)); ?> bills.</p>
+    
     <table class="table table-hover">
         <thead>
             <tr>
