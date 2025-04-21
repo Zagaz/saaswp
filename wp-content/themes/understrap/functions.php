@@ -34,3 +34,10 @@ function enqueue_styles() {
     wp_enqueue_style('custom-style', get_template_directory_uri() . '/css/style.css', array(), '1.0.0');
 }
 add_action('wp_enqueue_scripts', 'enqueue_styles');
+
+// disable admin bar for authors
+add_action('after_setup_theme', function () {
+    if (!current_user_can('administrator')) {
+        add_filter('show_admin_bar', '__return_false');
+    }
+});

@@ -1,10 +1,9 @@
-
-<?php 
+<?php
 get_template_part('template-parts/header-common');
 ?>
 
 
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg  navbar-dark bg-dark mb-4">
   <div class="container">
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,10 +11,10 @@ get_template_part('template-parts/header-common');
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
- 
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-		  Registration
+            Registration
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="?p=add-income&a=add">Add Income</a></li>
@@ -25,16 +24,18 @@ get_template_part('template-parts/header-common');
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-		  Report
+            Report
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="?p=report-income">My income bills</a></li>
             <li><a class="dropdown-item" href="?p=report-outcome">My outcome bills</a></li>
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
             <li><a class="dropdown-item" href="?p=report-full">Full Report</a></li>
           </ul>
         </li>
-  
+
       </ul>
 
     </div>
@@ -44,7 +45,3 @@ get_template_part('template-parts/header-common');
 
   </div>
 </nav>
-
-	
-
-	
