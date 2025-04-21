@@ -43,3 +43,13 @@ add_action('after_setup_theme', function () {
         add_filter('show_admin_bar', '__return_false');
     }
 });
+
+function add_fontawesome_cdn() {
+    wp_enqueue_style(
+        'fontawesome-cdn',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css', // você pode atualizar a versão se necessário
+        array(),
+        null
+    );
+}
+add_action('wp_enqueue_scripts', 'add_fontawesome_cdn');

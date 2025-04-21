@@ -73,6 +73,12 @@ if ($action == 'edit') {
       // Atualiza a variável $message com a mensagem de sucesso
       $message = "<div class='alert alert-success'><strong>Updated </strong>successfully.</div>";
       // echo a button return to ?p=report-<post_type>
+
+
+      if (strstr($post_type, 'edit-')) {
+         $post_type = str_replace('edit-', '', $post_type);
+      }
+
       $message .= "<a href='" . esc_url(home_url('/?p=report-' . $post_type)) . "' class='btn btn-primary'>Return to Report</a>";
    }
 } else {
@@ -87,7 +93,7 @@ if ($action == 'edit') {
 <div class="container add-outcome-wrapper">
    <div class="row justify-content-center">
       <div class="col-12 col-md-8 col-lg-6"> <!-- Responsive column -->
-         <h1><?php echo  ucwords( "$action $post_type"); ?></h1>
+         <h1><?php echo  ucwords("$action $post_type"); ?></h1>
          <?php
          echo $message ?? ''; // Exibe a mensagem dinamicamente
          ?>
@@ -116,7 +122,13 @@ if ($action == 'edit') {
                   name="add-<?php echo esc_attr($add_type); ?>"
                   id="add-<?php echo esc_attr($add_type); ?>-bill"
                   class="btn btn-primary">
-                  <?php echo ($action == 'edit') ? 'Update' : 'Add'; ?>
+
+
+
+
+
+
+                  <?php echo ($action == 'edit') ? '<i class="fa fa-refresh"></i> Update' : '<i class="fa fa-plus"></i> Add'; ?>
                </button>
             </div>
 
