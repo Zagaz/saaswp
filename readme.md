@@ -1,4 +1,4 @@
-![Badge](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2FZagaz%2Fsaaswp&label=WordPress&icon=emoji-sunglasses-fill&color=%23198754)
+![Badge](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2FZagaz%2Fsaaswp&label=SaaSWP&icon=emoji-sunglasses-fill&color=%23198754)
 ### Hello There
 
 - This is a simple SaaS made for WordPress.
