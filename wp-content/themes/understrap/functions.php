@@ -19,6 +19,8 @@ function enqueue_bootstrap_scripts() {
 add_action('wp_enqueue_scripts', 'enqueue_bootstrap_scripts');
 
 
+
+
 function enqueue_jquery_cdn() {
     // Deregister WordPress's default jQuery
     wp_deregister_script('jquery');

@@ -35,7 +35,11 @@ get_template_part('template-parts/header-common');
     <!-- Logout button -->
     <ul class="navbar-nav ms-auto">
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo wp_logout_url(home_url('/?p=dashboard')); ?>">Logout</a>
+        
+        <a class="nav-link" href="<?php echo wp_logout_url(home_url('/?p=dashboard')); ?>">
+        <i class="fa-solid fa-right-from-bracket"></i>  
+          Logout
+        </a>
       </li>
     </ul>
   </div>
