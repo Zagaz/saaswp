@@ -31,11 +31,12 @@ get_template_part('template-parts/header-common');
           <li><a class="dropdown-item" href="?p=report-full">Full Report</a></li>
         </ul>
       </li>
-      <!-- Logout button -->
+    </ul>
+    <!-- Logout button -->
+    <ul class="navbar-nav ms-auto">
       <li class="nav-item">
         <a class="nav-link" href="<?php echo wp_logout_url(home_url('/?p=dashboard')); ?>">Logout</a>
       </li>
-
     </ul>
   </div>
 </div>
