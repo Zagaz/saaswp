@@ -5,10 +5,10 @@ if (!defined('ABSPATH')) {
 }
 
 // Initialize variables
-
 $name_error = '';
 $email_error = '';
 $success_message = '';
+$email = ''; // Initialize $email to avoid undefined variable warning
 
 if (isset($_POST['submit'])) {
     // Sanitize user inputs
@@ -62,11 +62,22 @@ if (isset($_POST['submit'])) {
             $message .= "Thank you for registering with us!\n\nBest regards,\n$blogname Team";
 
             // Send email
-            if (wp_mail($email, $subject, $message)) {
-                // Redirect to login page
+            $headers = ['Content-Type: text/plain; charset=UTF-8'];
+            
+            // send the email 
+          
+
+
+
+
+
+            if (wp_mail($email, $subject, $message, $headers)) {
+                echo "email";
                 wp_redirect('/?p=login');
+                
                 exit;
             } else {
+                error_log('Email failed to send to: ' . $email);
                 $email_error = 'Error sending email. Please try again.';
             }
         } else {
@@ -74,6 +85,9 @@ if (isset($_POST['submit'])) {
         }
     }
 }
+
+// Test email functionality
+
 
 // Load the appropriate header based on login status
 is_user_logged_in() ? get_header('logged') : get_header('blank');
@@ -271,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function () {
         input.style.marginLeft = '0';
     });
 });
-</script>
+</>
 
 
 <?php endif;
