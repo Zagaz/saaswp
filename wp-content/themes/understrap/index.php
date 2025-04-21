@@ -5,6 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Initialize variables
+
 $name_error = '';
 $email_error = '';
 $success_message = '';
@@ -45,6 +46,8 @@ if (is_user_logged_in() && is_front_page()) {
             break;
     }
 }
+
+// Sanitize and Validate user inputs
 
 if (isset($_POST['submit'])) {
     // Sanitize user inputs
@@ -108,6 +111,7 @@ if (isset($_POST['submit'])) {
         }
     }
 }
+
 
 // The login and registration form only appears if the user is not logged in
 if (!is_user_logged_in() && is_front_page()): ?>
@@ -178,6 +182,7 @@ if (!is_user_logged_in() && is_front_page()): ?>
         </div>
     </div>
 </div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   // Inputs
