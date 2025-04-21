@@ -128,15 +128,15 @@ if (!is_user_logged_in() && is_front_page()): ?>
                 <form action="" method="POST">
                     <div class="">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" 
+                        <input type="text" class="form-control mb-3" id="name" name="name" 
                                value="<?php echo esc_attr($_POST['name'] ?? ''); ?>" />
-                        <span class="text-danger"><?php echo esc_html($name_error); ?></span>
+                        <span class="text-danger mb-3"><?php echo esc_html($name_error); ?></span>
                     </div>
                     <div class="form-group">
                         <label for="email">E-mail</label>
-                        <input type="text" class="form-control" id="email" name="email" 
+                        <input type="text" class="form-control mb-3" id="email" name="email" 
                                value="<?php echo esc_attr($_POST['email'] ?? ''); ?>" />
-                        <span class="text-danger"><?php echo esc_html($email_error); ?></span>
+                        <span class="text-danger mb-3"><?php echo esc_html($email_error); ?></span>
                     </div>
                     <button type="submit" class="btn btn-primary" name="submit">Register</button>
                 </form>
@@ -178,7 +178,54 @@ if (!is_user_logged_in() && is_front_page()): ?>
         </div>
     </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Inputs
+  document.querySelectorAll('#loginform input[type="text"], #loginform input[type="password"]').forEach(function (input) {
+    input.classList.add('form-control', 'mb-3');
+  });
+
+  // Checkbox
+  const rememberMeWrapper = document.querySelector('.login-remember');
+  if (rememberMeWrapper) {
+    rememberMeWrapper.classList.add('form-check', 'mb-3');
+
+    const checkbox = rememberMeWrapper.querySelector('input[type="checkbox"]');
+    const label = rememberMeWrapper.querySelector('label');
+
+    if (checkbox) checkbox.classList.add('form-check-input');
+    if (label) label.classList.add('form-check-label');
+  }
+
+  // Botão
+  const submitBtn = document.querySelector('#wp-submit');
+  if (submitBtn) {
+    submitBtn.classList.remove('button', 'button-primary');
+    submitBtn.classList.add('btn', 'btn-primary');
+  }
+
+  // Adiciona classe form-group nos parágrafos (exceto o botão)
+  document.querySelectorAll('#loginform p').forEach(function (p) {
+    if (!p.classList.contains('login-submit')) {
+      p.classList.add('mb-3');
+    }
+  });
+
+  // reduce all .form-control 80% width and justify left
+    document.querySelectorAll('.form-control').forEach(function (input) {
+        input.style.width = '80%';
+        input.style.marginLeft = '0';
+    });
+   
+  
+
+  
+});
+</script>
+
 
 <?php endif;
+
+
 
 get_footer(); ?>
