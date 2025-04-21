@@ -116,6 +116,7 @@ if (isset($_POST['submit'])) {
 // The login and registration form only appears if the user is not logged in
 if (!is_user_logged_in() && is_front_page()): ?>
 
+
 <div class="container">
     <div class="row">
         <div class="col-6 form-registration">
