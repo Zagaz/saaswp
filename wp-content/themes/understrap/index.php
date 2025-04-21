@@ -132,7 +132,7 @@ if (!is_user_logged_in() && is_front_page()): ?>
             <?php endif; ?>
 
             <div class="registration-form <?php echo !empty($success_message) ? 'd-none' : ''; ?>">
-                <form action="/?p=login" method="POST">
+                <form action="/?p=login" method="POST" id="registration-form">
                     <div class="">
                         <label for="name">Name</label>
                         <input type="text" class="form-control mb-3" id="name" name="name" 
@@ -144,6 +144,10 @@ if (!is_user_logged_in() && is_front_page()): ?>
                         <input type="text" class="form-control mb-3" id="email" name="email" 
                                value="<?php echo esc_attr($_POST['email'] ?? ''); ?>" />
                         <span class="text-danger mb-3"><?php echo esc_html($email_error); ?></span>
+                    </div>
+                    <div>
+                        <small>You password will be sent to your email.</small>
+
                     </div>
                     <button type="submit" class="btn btn-primary" name="submit">Register</button>
                 </form>
@@ -186,48 +190,86 @@ if (!is_user_logged_in() && is_front_page()): ?>
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true" data-bs-backdrop="static" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Registration Successful</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Your password was sent to: <span id="user-email"></span>.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // Inputs
-  document.querySelectorAll('#loginform input[type="text"], #loginform input[type="password"]').forEach(function (input) {
-    input.classList.add('form-control', 'mb-3');
-  });
+    const form = document.getElementById('registration-form');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent form submission for demonstration purposes
 
-  // Checkbox
-  const rememberMeWrapper = document.querySelector('.login-remember');
-  if (rememberMeWrapper) {
-    rememberMeWrapper.classList.add('form-check', 'mb-3');
+        const emailInput = document.getElementById('email');
+        const userEmail = emailInput.value;
 
-    const checkbox = rememberMeWrapper.querySelector('input[type="checkbox"]');
-    const label = rememberMeWrapper.querySelector('label');
+        // Set the email in the modal
+        document.getElementById('user-email').textContent = userEmail;
 
-    if (checkbox) checkbox.classList.add('form-check-input');
-    if (label) label.classList.add('form-check-label');
-  }
+        // Show the modal
+        const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+        successModal.show();
+    });
 
-  // Botão
-  const submitBtn = document.querySelector('#wp-submit');
-  if (submitBtn) {
-    submitBtn.classList.remove('button', 'button-primary');
-    submitBtn.classList.add('btn', 'btn-primary');
-  }
+    // Clear all inputs when the modal is dismissed
+    const successModalElement = document.getElementById('successModal');
+    successModalElement.addEventListener('hidden.bs.modal', function () {
+        // Clear all forms on the page
+        document.querySelectorAll('form').forEach(function (form) {
+            form.reset();
+        });
+    });
 
-  // Adiciona classe form-group nos parágrafos (exceto o botão)
-  document.querySelectorAll('#loginform p').forEach(function (p) {
-    if (!p.classList.contains('login-submit')) {
-      p.classList.add('mb-3');
+    // Inputs
+    document.querySelectorAll('#loginform input[type="text"], #loginform input[type="password"]').forEach(function (input) {
+        input.classList.add('form-control', 'mb-3');
+    });
+
+    // Checkbox
+    const rememberMeWrapper = document.querySelector('.login-remember');
+    if (rememberMeWrapper) {
+        rememberMeWrapper.classList.add('form-check', 'mb-3');
+
+        const checkbox = rememberMeWrapper.querySelector('input[type="checkbox"]');
+        const label = rememberMeWrapper.querySelector('label');
+
+        if (checkbox) checkbox.classList.add('form-check-input');
+        if (label) label.classList.add('form-check-label');
     }
-  });
 
-  // reduce all .form-control 80% width and justify left
+    // Botão
+    const submitBtn = document.querySelector('#wp-submit');
+    if (submitBtn) {
+        submitBtn.classList.remove('button', 'button-primary');
+        submitBtn.classList.add('btn', 'btn-primary');
+    }
+
+    // Adiciona classe form-group nos parágrafos (exceto o botão)
+    document.querySelectorAll('#loginform p').forEach(function (p) {
+        if (!p.classList.contains('login-submit')) {
+            p.classList.add('mb-3');
+        }
+    });
+
+    // Reduce all .form-control 80% width and justify left
     document.querySelectorAll('.form-control').forEach(function (input) {
         input.style.width = '80%';
         input.style.marginLeft = '0';
     });
-   
-  
-
-  
 });
 </script>
 
