@@ -116,7 +116,13 @@ if ($action == 'edit') {
                   name="add-<?php echo esc_attr($add_type); ?>"
                   id="add-<?php echo esc_attr($add_type); ?>-bill"
                   class="btn btn-primary">
-                  <?php echo ($action == 'edit') ? 'Update' : 'Add'; ?>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <?php echo ($action == 'edit') ? '<i class="fa fa-refresh"></i> Update' : '<i class="fa fa-plus"></i> Add'; ?>
                </button>
             </div>
 

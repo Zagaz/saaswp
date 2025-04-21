@@ -77,8 +77,14 @@ if (empty($posts)) {
                         <td><?php echo esc_html($price); ?></td>
                         <td><?php echo esc_html($date); ?></td>
                         <td>
-                            <a href="?p=edit-<?php echo esc_attr($category); ?>&dc=<?php echo esc_attr($id_data); ?>&a=edit" class="btn btn-primary">View</a>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-<?php echo esc_attr($id_data); ?>">Delete</button>
+                            <a href="?p=edit-<?php echo esc_attr($category); ?>&dc=<?php echo esc_attr($id_data); ?>&a=edit" class="btn btn-primary">
+                            <i class="fa fa-edit"></i>
+                            Edit
+                            </a>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-<?php echo esc_attr($id_data); ?>">
+                            <i class="fa fa-trash"></i>
+                            Delete
+                            </button>
                         </td>
                     </tr>
 
@@ -96,7 +102,10 @@ if (empty($posts)) {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <a href="<?php echo esc_url(get_delete_post_link($id_data)); ?>" class="btn btn-danger">Delete</a>
+                                    <a href="<?php echo esc_url(get_delete_post_link($id_data)); ?>" class="btn btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                    Delete
+                                    </a>
                                 </div>
                             </div>
                         </div>
