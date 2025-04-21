@@ -10,45 +10,6 @@ $name_error = '';
 $email_error = '';
 $success_message = '';
 
-// Load the appropriate header based on login status
-is_user_logged_in() ? get_header('logged') : get_header('blank');
-
-if (is_user_logged_in() && is_front_page()) {
-    $page = $_GET['p'] ?? '';
-
-    switch ($page) {
-        case 'dashboard':
-            get_template_part('template-parts/tpl-dashboard');
-            break;
-        case 'add-income':
-            get_template_part('template-parts/tpl-add-income');
-            break;
-        case 'add-outcome':
-            get_template_part('template-parts/tpl-add-outcome');
-            break;
-        case 'report-income':
-            get_template_part('template-parts/tpl-report-income');
-            break;
-        case 'report-outcome':
-            get_template_part('template-parts/tpl-report-outcome');
-            break;
-        case 'report-full':
-            get_template_part('template-parts/tpl-report-full');
-            break;
-        case 'edit-income':
-            get_template_part('template-parts/tpl-edit-income');
-            break;
-        case 'edit-outcome':
-            get_template_part('template-parts/tpl-edit-outcome');
-            break;
-        default:
-            get_template_part('template-parts/tpl-dashboard');
-            break;
-    }
-}
-
-// Sanitize and Validate user inputs
-
 if (isset($_POST['submit'])) {
     // Sanitize user inputs
     $name = sanitize_text_field($_POST['name'] ?? '');
@@ -102,7 +63,9 @@ if (isset($_POST['submit'])) {
 
             // Send email
             if (wp_mail($email, $subject, $message)) {
-                $success_message = 'User registered successfully.';
+                // Redirect to login page
+                wp_redirect('/?p=login');
+                exit;
             } else {
                 $email_error = 'Error sending email. Please try again.';
             }
@@ -112,6 +75,45 @@ if (isset($_POST['submit'])) {
     }
 }
 
+// Load the appropriate header based on login status
+is_user_logged_in() ? get_header('logged') : get_header('blank');
+
+if (is_user_logged_in() && is_front_page()) {
+    $page = $_GET['p'] ?? '';
+
+    switch ($page) {
+        case 'login':
+            get_template_part('template-parts/tpl-login');
+            break;
+        case 'dashboard':
+            get_template_part('template-parts/tpl-dashboard');
+            break;
+        case 'add-income':
+            get_template_part('template-parts/tpl-add-income');
+            break;
+        case 'add-outcome':
+            get_template_part('template-parts/tpl-add-outcome');
+            break;
+        case 'report-income':
+            get_template_part('template-parts/tpl-report-income');
+            break;
+        case 'report-outcome':
+            get_template_part('template-parts/tpl-report-outcome');
+            break;
+        case 'report-full':
+            get_template_part('template-parts/tpl-report-full');
+            break;
+        case 'edit-income':
+            get_template_part('template-parts/tpl-edit-income');
+            break;
+        case 'edit-outcome':
+            get_template_part('template-parts/tpl-edit-outcome');
+            break;
+        default:
+            get_template_part('template-parts/tpl-dashboard');
+            break;
+    }
+}
 
 // The login and registration form only appears if the user is not logged in
 if (!is_user_logged_in() && is_front_page()): ?>
@@ -130,7 +132,7 @@ if (!is_user_logged_in() && is_front_page()): ?>
             <?php endif; ?>
 
             <div class="registration-form <?php echo !empty($success_message) ? 'd-none' : ''; ?>">
-                <form action="" method="POST">
+                <form action="/?p=login" method="POST">
                     <div class="">
                         <label for="name">Name</label>
                         <input type="text" class="form-control mb-3" id="name" name="name" 
