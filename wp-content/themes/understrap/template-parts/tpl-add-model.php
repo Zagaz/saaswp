@@ -44,7 +44,23 @@ if ($action == 'edit') {
    $post = get_post($id); // Use get_post() to retrieve the raw title
    $title = $post->post_title; // Get the raw title without "Private:"
    $price = get_field('bill_price', $id);
-   $date = get_field('bill_date', $id);
+   $raw_date = get_field('bill_date', $id); // Retrieve the raw date
+
+   // Debugging the raw date
+   error_log('Raw date from database: ' . print_r($raw_date, true));
+
+   // Convert DD/MM/YYYY to YYYY-MM-DD
+   if (!empty($raw_date)) {
+       $date_parts = date_create_from_format('d/m/Y h:i a', $raw_date);
+       if ($date_parts) {
+           $date = $date_parts->format('Y-m-d'); // Format the date to YYYY-MM-DD
+       } else {
+           $date = ''; // Leave blank if the date is invalid
+       }
+   } else {
+       $date = ''; // Leave blank if the raw date is empty
+   }
+
    $message = "<div class='alert alert-info'><strong> Editing:</strong> $title</div>";
 
    if (isset($_POST["add-{$add_type}"])) {
@@ -70,10 +86,8 @@ if ($action == 'edit') {
       // Refresh the $title variable with the new value
       $title = $name;
 
-      // Atualiza a variável $message com a mensagem de sucesso
+      // Update the success message
       $message = "<div class='alert alert-success'><strong>Updated </strong>successfully.</div>";
-      // echo a button return to ?p=report-<post_type>
-
 
       if (strstr($post_type, 'edit-')) {
          $post_type = str_replace('edit-', '', $post_type);
