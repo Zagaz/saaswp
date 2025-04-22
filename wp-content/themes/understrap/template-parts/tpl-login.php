@@ -8,12 +8,7 @@ $name_error = '';
 $email_error = '';
 $success_message = '';
 
-
-
-
 ?>
-
-
 
 <div class="container">
     <div class="row">

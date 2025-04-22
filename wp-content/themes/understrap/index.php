@@ -90,6 +90,9 @@ if (!is_user_logged_in() && is_front_page()) {
     $page = $_GET['p'] ?? '';
 
     switch ($page) {
+        case 'login':
+            get_template_part('template-parts/tpl-login');
+            break;
         case 'is_success':
             get_template_part('template-parts/tpl-is-success');
             break;
@@ -101,9 +104,7 @@ if (is_user_logged_in() && is_front_page()) {
     $page = $_GET['p'] ?? '';
 
     switch ($page) {
-        case 'login':
-            get_template_part('template-parts/tpl-login');
-            break;
+        
         case 'dashboard':
             get_template_part('template-parts/tpl-dashboard');
             break;
@@ -134,10 +135,7 @@ if (is_user_logged_in() && is_front_page()) {
     }
 }
 
-if (!is_user_logged_in() && is_front_page()){
-    get_template_part('template-parts/tpl-login' );
 
-}
 
 // The login and registration form only appears if the user is not logged in
 if (!is_user_logged_in() && is_front_page()): ?>
