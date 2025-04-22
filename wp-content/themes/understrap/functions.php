@@ -53,3 +53,16 @@ function add_fontawesome_cdn() {
     );
 }
 add_action('wp_enqueue_scripts', 'add_fontawesome_cdn');
+
+
+add_action('template_redirect', function () {
+    if (!is_user_logged_in()) {
+        $current_url = $_SERVER['REQUEST_URI'] ?? '';
+
+        // Evita loop de redirecionamento quando já está na página /?p=login
+        if (strpos($current_url, '/?p=login') === false && strpos($current_url, 'wp-login.php') === false) {
+            wp_redirect(home_url('/?p=login'));
+            exit;
+        }
+    }
+});
