@@ -77,3 +77,43 @@ if ($is_success) {
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector('.login-form form');
+    if (!form) return;
+
+    // Adiciona classe do Bootstrap ao formulário
+    form.classList.add('p-4', 'border', 'rounded', 'bg-light');
+
+    // Estiliza os grupos de input
+    form.querySelectorAll('p').forEach(p => {
+        p.classList.add('mb-3');
+    });
+
+    // Inputs
+    form.querySelectorAll('input[type="text"], input[type="password"]').forEach(input => {
+        input.classList.add('form-control');
+    });
+
+    // Checkbox
+    const checkbox = form.querySelector('input[type="checkbox"]');
+    if (checkbox) {
+        checkbox.classList.add('form-check-input');
+        const label = checkbox.closest('label');
+        if (label) {
+            label.classList.add('form-check-label');
+            const wrapper = checkbox.closest('p');
+            if (wrapper) {
+                wrapper.classList.add('form-check');
+            }
+        }
+    }
+
+    // Botão de login
+    const submit = form.querySelector('input[type="submit"]');
+    if (submit) {
+        submit.classList.add('btn', 'btn-primary', 'w-100');
+    }
+});
+</script>
