@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function () {
         input.style.marginLeft = '0';
     });
 });
-</>
+
 
 
 <?php endif;
