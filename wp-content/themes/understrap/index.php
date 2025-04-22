@@ -65,20 +65,14 @@ if (isset($_POST['submit'])) {
             $headers = ['Content-Type: text/plain; charset=UTF-8'];
             
             // send the email 
-          
-
-
-
-
-
-            if (wp_mail($email, $subject, $message, $headers)) {
-                echo "email";
-                wp_redirect('/?p=login');
+             if (wp_mail($email, $subject, $message, $headers)) {
+                
+                wp_redirect('/?p=is_success&a=1');
                 
                 exit;
             } else {
                 error_log('Email failed to send to: ' . $email);
-                $email_error = 'Error sending email. Please try again.';
+                wp_redirect('/?p=is_success&a=0');
             }
         } else {
             $email_error = 'Error creating user: ' . $user_id->get_error_message();
@@ -91,6 +85,18 @@ if (isset($_POST['submit'])) {
 
 // Load the appropriate header based on login status
 is_user_logged_in() ? get_header('logged') : get_header('blank');
+
+if (!is_user_logged_in() && is_front_page()) {
+    $page = $_GET['p'] ?? '';
+
+    switch ($page) {
+        case 'is_success':
+            get_template_part('template-parts/tpl-is-success');
+            break;
+       
+     
+    }
+}
 
 if (is_user_logged_in() && is_front_page()) {
     $page = $_GET['p'] ?? '';
@@ -146,7 +152,7 @@ if (!is_user_logged_in() && is_front_page()): ?>
             <?php endif; ?>
 
             <div class="registration-form <?php echo !empty($success_message) ? 'd-none' : ''; ?>">
-                <form action="/?p=login" method="POST" id="registration-form">
+                <form action="/?p=is_success" method="post" id="registration-form">
                     <div class="">
                         <label for="name">Name</label>
                         <input type="text" class="form-control mb-3" id="name" name="name" 
