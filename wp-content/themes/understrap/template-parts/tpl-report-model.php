@@ -79,11 +79,6 @@ if (empty($posts)) {
                         echo 'Error';
                     }
 
-
-
-
-                    
-                    
                     $total += ($category === 'income') ? $price : -$price;
                 ?>
                     <tr>
