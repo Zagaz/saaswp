@@ -71,7 +71,7 @@ if (empty($posts)) {
                     // convert to month/day/year
                     $datetime = DateTimeImmutable::createFromFormat('d/m/Y h:i a', $date);
 
-                    // Formata para M/D/Y
+                    // Format to m/d/Y
                     if ($datetime) {
                         $formattedDate = $datetime->format('m/d/Y');
                 
