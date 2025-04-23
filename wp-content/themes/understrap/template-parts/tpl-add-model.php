@@ -1,4 +1,5 @@
 <?php
+
 // This will check if it is income or outcome;
 $add_type  = $_GET['p'];
 $post_type = str_replace('add-', '', $add_type);

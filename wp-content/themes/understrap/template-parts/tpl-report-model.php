@@ -74,7 +74,7 @@ if (empty($posts)) {
                     // Formata para M/D/Y
                     if ($datetime) {
                         $formattedDate = $datetime->format('m/d/Y');
-                        echo $formattedDate; // Resultado: 04/25/2025
+                
                     } else {
                         echo 'Error';
                     }
