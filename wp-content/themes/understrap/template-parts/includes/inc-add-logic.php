@@ -70,9 +70,10 @@ if ($action == 'edit') {
    } else {
        $date = ''; // Leave blank if the raw date is empty
    }
-
+   // This will check if it is income or outcome and updates the title.
    $message = "<div class='alert alert-info'><strong> Editing:</strong> $title</div>";
 
+   //On click the button 
    if (isset($_POST["add-{$add_type}"])) {
       $name = sanitize_text_field($_POST['bill_name']);
       $price = sanitize_text_field($_POST['bill_price']);
@@ -99,10 +100,11 @@ if ($action == 'edit') {
       // Update the success message
       $message = "<div class='alert alert-success'><strong>Updated </strong>successfully.</div>";
 
+      // Checks if it is income or outcome and updates the title.
       if (strstr($post_type, 'edit-')) {
          $post_type = str_replace('edit-', '', $post_type);
       }
-
+      // Generates a dynamic button that return to report Income or Outcome
       $message .= "<a href='" . esc_url(home_url('/?p=report-' . $post_type)) . "' class='btn btn-primary'>Return to Report</a>";
    }
 } else {
