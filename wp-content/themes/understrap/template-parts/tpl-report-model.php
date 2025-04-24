@@ -68,6 +68,17 @@ if (empty($posts)) {
                     $name = get_field('bill_name', $id_data);
                     $price = get_field('bill_price', $id_data);
                     $date = get_field('bill_date', $id_data);
+                    // convert to month/day/year
+                    $datetime = DateTimeImmutable::createFromFormat('d/m/Y h:i a', $date);
+
+                    // Format to m/d/Y
+                    if ($datetime) {
+                        $formattedDate = $datetime->format('m/d/Y');
+                
+                    } else {
+                        echo 'Error';
+                    }
+
                     $total += ($category === 'income') ? $price : -$price;
                 ?>
                     <tr>
@@ -75,7 +86,7 @@ if (empty($posts)) {
                         <td><?php echo esc_html(ucfirst($category)); ?></td>
                         <td><?php echo esc_html($name); ?></td>
                         <td><?php echo esc_html($price); ?></td>
-                        <td><?php echo esc_html($date); ?></td>
+                        <td><?php echo esc_html($formattedDate); ?></td>
                         <td>
                             <a href="?p=edit-<?php echo esc_attr($category); ?>&dc=<?php echo esc_attr($id_data); ?>&a=edit" class="btn btn-primary">
                             <i class="fa fa-edit"></i>
