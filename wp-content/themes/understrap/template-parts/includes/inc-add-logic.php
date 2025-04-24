@@ -86,6 +86,8 @@ if (!is_user_logged_in()) {
         if (isset($_POST["add-{$add_type}"])) {
 
             
+
+            
            
 
             // Sanitize input
