@@ -25,10 +25,7 @@ if (!is_user_logged_in()) {
     // Handle ADD form submission
     if (isset($_POST["add-{$add_type}"])) {
 
-        // Security nonce check
-        if (!isset($_POST['entry_nonce']) || !wp_verify_nonce($_POST['entry_nonce'], 'add_edit_entry')) {
-            wp_die(__('Security check failed', 'text-domain'));
-        }
+       
 
         // Sanitize form input
         $name  = sanitize_text_field($_POST['bill_name']);
@@ -63,7 +60,13 @@ if (!is_user_logged_in()) {
         $id = $entry_id;
         $post = get_post($id);
 
-     
+        // Ensure post exists and belongs to the user
+        /** 
+        if (!$post || $post->post_type !== $post_type || (int) $post->post_author !== get_current_user_id()) {
+            wp_die(__('You are not allowed to edit this entry.', 'text-domain'));
+        }
+            */
+
         // Load existing data
         $title    = $post->post_title;
         $price    = get_field('bill_price', $id);
@@ -82,11 +85,8 @@ if (!is_user_logged_in()) {
         // Handle form submission for editing
         if (isset($_POST["add-{$add_type}"])) {
 
-            // Security nonce check
-            /** */
-            if (!isset($_POST['entry_nonce']) || !wp_verify_nonce($_POST['entry_nonce'], 'add_edit_entry')) {
-                wp_die(__('Security check failed', 'text-domain'));
-            }
+            
+           
 
             // Sanitize input
             $name  = sanitize_text_field($_POST['bill_name']);
