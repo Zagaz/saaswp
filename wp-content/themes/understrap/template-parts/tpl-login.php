@@ -9,6 +9,87 @@ $email_error = '';
 $success_message = '';
 
 ?>
+<div class="container py-5">
+    <div class="row g-4">
+        <!-- LEFT - Registration -->
+        <div class="col-12 col-md-6 form-registration">
+            <h2 class="mb-3">Registration</h2>
+            <p>Fill in the form below to register.</p>
+
+            <?php if (!empty($success_message)) : ?>
+                <div class="alert alert-success">
+                    <?php echo esc_html($success_message); ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="registration-form <?php echo !empty($success_message) ? 'd-none' : ''; ?>">
+                <form action="/?p=is_success" method="post" id="registration-form">
+                    <!-- Name Field -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name"
+                               value="<?php echo esc_attr($_POST['name'] ?? ''); ?>" />
+                        <span class="text-danger"><?php echo esc_html($name_error); ?></span>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-mail</label>
+                        <input type="text" class="form-control" id="email" name="email"
+                               value="<?php echo esc_attr($_POST['email'] ?? ''); ?>" />
+                        <span class="text-danger"><?php echo esc_html($email_error); ?></span>
+                    </div>
+
+                    <!-- Info -->
+                    <div class="mb-3">
+                        <small class="text-muted">Your password will be sent to your email.</small>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="btn btn-primary w-100" name="submit">Register</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- RIGHT - Login -->
+        <div class="col-12 col-md-6 form-login">
+            <h2 class="mb-3">Login</h2>
+            <p>Already have an account? Log in below.</p>
+
+            <div class="login-form">
+                <?php 
+                if (function_exists('wp_login_form')) {
+                    $args = array(
+                        'echo'              => true,
+                        'redirect'          => home_url(),
+                        'form_id'           => 'loginform',
+                        'label_username'    => __('Username or Email Address'),
+                        'label_password'    => __('Password'),
+                        'label_remember'    => __('Remember Me'),
+                        'label_log_in'      => __('Log In'),
+                        'id_username'       => 'user_login',
+                        'id_password'       => 'user_pass',
+                        'id_remember'       => 'rememberme',
+                        'id_submit'         => 'wp-submit',
+                        'remember'          => true,
+                        'value_username'    => '',
+                        'value_remember'    => false,
+                        'form_class'        => 'form-group',
+                        'before'            => '<div class="mb-3">',
+                        'after'             => '</div>',
+                    );
+                    wp_login_form($args);
+                } else {
+                    echo '<p>Login functionality is currently unavailable.</p>';
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--
 
 <div class="container">
     <div class="row">
@@ -80,6 +161,7 @@ $success_message = '';
         </div>
     </div>
 </div>
+            -->
 
 
 <script>
