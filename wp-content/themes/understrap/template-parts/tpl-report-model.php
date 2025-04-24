@@ -71,19 +71,14 @@ if (empty($posts)) {
                     // convert to month/day/year
                     $datetime = DateTimeImmutable::createFromFormat('d/m/Y h:i a', $date);
 
-                    // Formata para M/D/Y
+                    // Format to m/d/Y
                     if ($datetime) {
                         $formattedDate = $datetime->format('m/d/Y');
-                        echo $formattedDate; // Resultado: 04/25/2025
+                
                     } else {
                         echo 'Error';
                     }
 
-
-
-
-                    
-                    
                     $total += ($category === 'income') ? $price : -$price;
                 ?>
                     <tr>
