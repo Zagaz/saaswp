@@ -96,6 +96,9 @@ if (!is_user_logged_in() && is_front_page()) {
         case 'is_success':
             get_template_part('template-parts/tpl-is-success');
             break;
+        default:
+            get_template_part('template-parts/tpl-login');
+            break;
    
     }
 }
