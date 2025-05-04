@@ -3,8 +3,6 @@
 
 SaaSWP is a tool designed to simplify and automate WordPress provisioning for SaaS platforms. It aims to provide developers with a solid foundation for building scalable WordPress-based SaaS solutions.
 
-![Visitor Badge](https://visitor-badge.laobi.icu/badge?page_id=Zagaz.saaswp)
-
 ## 🚀 Features
 
 - 🔧 Automatic WordPress site provisioning
