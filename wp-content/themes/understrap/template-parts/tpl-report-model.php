@@ -68,15 +68,17 @@ if (empty($posts)) {
                     $name = get_field('bill_name', $id_data);
                     $price = get_field('bill_price', $id_data);
                     $date = get_field('bill_date', $id_data);
-                    // convert to month/day/year
-                    $datetime = DateTimeImmutable::createFromFormat('d/m/Y h:i a', $date);
 
-                    // Format to m/d/Y
-                    if ($datetime) {
-                        $formattedDate = $datetime->format('m/d/Y');
-                
+                    // Format date or fallback to "Invalid date"
+                    if ($date) {
+                        $datetime = DateTimeImmutable::createFromFormat('d/m/Y h:i a', $date);
+                        if ($datetime) {
+                            $formattedDate = $datetime->format('m/d/Y');
+                        } else {
+                            $formattedDate = 'Invalid date';
+                        }
                     } else {
-                        echo 'Error';
+                        $formattedDate = 'Invalid date';
                     }
 
                     $total += ($category === 'income') ? $price : -$price;
