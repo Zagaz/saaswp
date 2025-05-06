@@ -20,7 +20,7 @@ SaaSWP is a tool designed to simplify and automate WordPress provisioning for Sa
 
 ## 👉 Watch the video demo! 🎥
   
-[![link-video.png](https://i.postimg.cc/Bb03wT7X/link-video.png)](https://www.loom.com/share/2cf40d147df740dba4baa2eb85023878?sid=9d856420-84a2-4b0a-b0fc-a2772ed8a60a)
+[![link-video.png](https://i.ibb.co/Qv7ZTkN6/loom-react.png)](https://www.loom.com/share/2cf40d147df740dba4baa2eb85023878?sid=9d856420-84a2-4b0a-b0fc-a2772ed8a60a)
 
 ## 🤝 Contributing
 Contributions, issues and feature requests are welcome!
