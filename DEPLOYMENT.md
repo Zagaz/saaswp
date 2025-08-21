@@ -31,4 +31,4 @@ After deployment, visit wp-admin → Appearance → SaaSWP Mail and send a test 
 ## Notes
 
 - The mu-plugin `saaswp-smtp.php` is intentionally empty; the theme fully manages email.
-- Attachments, CC/BCC, and Reply-To are supported for Resend, Mailgun, and SendGrid.
+- CC/BCC and Reply-To are supported for all API providers. Attachments are supported for Resend and SendGrid via API. (Mailgun attachments via API can be added later if needed.)
