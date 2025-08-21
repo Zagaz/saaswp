@@ -1,0 +1,107 @@
+# ==============================
+# OS / Filesystem
+# ==============================
+.DS_Store
+Thumbs.db
+Desktop.ini
+Icon?
+$RECYCLE.BIN/
+.Trashes
+
+# ==============================
+# Editors / IDEs
+# ==============================
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-workspace
+*.sublime-project
+*.swp
+*.swo
+*.orig
+
+# ==============================
+# Logs / Reports
+# ==============================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+coverage/
+
+# ==============================
+# Node / Frontend build
+# ==============================
+node_modules/
+.npm/
+.pnpm-store/
+.bun/
+.cache/
+.eslintcache
+.stylelintcache
+parcel-cache/
+dist/
+build/
+.tmp/
+.sass-cache/
+
+# ==============================
+# PHP / Composer
+# ==============================
+vendor/
+composer.phar
+.phpunit.result.cache
+
+# ==============================
+# Environment & secrets
+# ==============================
+.env
+.env.*
+!.env.example
+.env.local
+.envrc
+.direnv/
+*.local
+
+# ==============================
+# WordPress
+# ==============================
+# Generated or local-only files
+.htaccess
+sitemap.xml
+sitemap.xml.gz
+
+# Prevent accidental new config adds (tracked ones remain tracked)
+wp-config.php
+wp-config-*.php
+
+# Caches and temp
+wp-content/advanced-cache.php
+wp-content/wp-cache-config.php
+wp-content/object-cache.php
+wp-content/cache/
+wp-content/backup-db/
+wp-content/backups/
+wp-content/upgrade/
+
+# Uploads (large binaries; manage externally if needed)
+wp-content/uploads/
+
+# Legacy multisite dir
+wp-content/blogs.dir/
+
+# Debug logs
+wp-content/debug.log
+
+# ==============================
+# Database dumps / misc
+# ==============================
+*.sql
+*.sqlite
+*.sqlite3
+*.bak
+*.tmp
+*.temp
+*.lock
