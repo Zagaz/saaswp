@@ -1,33 +1,34 @@
-# Deployment on Wasmer
+# SaaSWP Deployment on Wasmer
 
-This app expects SMTP to be configured via environment variables in production. We provide a must-use plugin at `wp-content/mu-plugins/saaswp-smtp.php` that routes all WordPress mail through SMTP.
+This project is a self-contained WordPress theme (SaaSWP). Mail is handled entirely by the theme.
 
-## Required environment variables
+## Mail configuration (Wasmer friendly)
 
-Set the following in Wasmer project settings (Environment Variables):
+Prefer HTTP API providers to avoid blocked SMTP ports on serverless hosts:
 
-- SMTP_HOST: SMTP server hostname (e.g., smtp.sendgrid.net)
-- SMTP_PORT: 587 (TLS) or 465 (SSL). Optional when SMTP_SECURE provided
-- SMTP_SECURE: tls | ssl | starttls | none (default: tls)
-- SMTP_USERNAME: SMTP username (e.g., apikey for SendGrid)
-- SMTP_PASSWORD: SMTP password or API key
-- SMTP_FROM: no-reply@your-domain.tld
-- SMTP_FROM_NAME: Your App Name
+- Resend: set RESEND_API_KEY and SAASWP_MAIL_PROVIDER=resend
+- Mailgun: set MAILGUN_API_KEY, MAILGUN_DOMAIN, optional MAILGUN_REGION=eu, and SAASWP_MAIL_PROVIDER=mailgun
+- SendGrid: set SENDGRID_API_KEY and SAASWP_MAIL_PROVIDER=sendgrid
 
-Optional:
-- SMTP_DEBUG: 1-4 for troubleshooting (logs to PHP error_log)
-- SMTP_TIMEOUT: seconds
-- SMTP_ALLOW_SELF_SIGNED: true (only for testing)
+Optionally, configure the From identity:
 
-## Testing email
+- SAASWP_MAIL_FROM (email)
+- SAASWP_MAIL_FROM_NAME (name)
 
-If WP-CLI is available, use:
+SMTP fallback (not recommended on Wasmer):
 
-wp saaswp smtp-test --to=email@example.com
+- SAASWP_MAIL_PROVIDER=smtp
+- SAASWP_SMTP_HOST, SAASWP_SMTP_PORT, SAASWP_SMTP_USER, SAASWP_SMTP_PASS, SAASWP_SMTP_SECURE=tls|ssl|none
 
-Otherwise, trigger a password reset or comment notification to verify.
+Defaults if no env vars set: provider=php (native wp_mail/PHPMailer).
+
+You can also configure these in wp-admin → Appearance → SaaSWP Mail. Env vars override dashboard values in production.
+
+## Test email
+
+After deployment, visit wp-admin → Appearance → SaaSWP Mail and send a test message.
 
 ## Notes
 
-- PHP's native mail() is not reliable in serverless/edge environments; SMTP ensures deliverability.
-- Keep credentials in Wasmer secrets, not in git or wp-config.php.
+- The mu-plugin `saaswp-smtp.php` is intentionally empty; the theme fully manages email.
+- Attachments, CC/BCC, and Reply-To are supported for Resend, Mailgun, and SendGrid.
